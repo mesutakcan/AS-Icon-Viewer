@@ -21,7 +21,7 @@ jobs:
         shell: pwsh
         run: |
           Invoke-WebRequest `
-            -Uri "https://github.com/AutoHotkey/AutoHotkey/releases/download/v2.0.20/AutoHotkey_2.0.20.zip" `
+            -Uri "https://github.com/AutoHotkey/AutoHotkey/releases/download/v2.0.30/AutoHotkey_2.0.30.zip" `
             -OutFile "ahk.zip"
 
           Invoke-WebRequest `
