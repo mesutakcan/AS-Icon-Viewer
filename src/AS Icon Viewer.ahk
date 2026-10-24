@@ -1,21 +1,21 @@
 ;@Ahk2Exe-SetName AS Icon Viewer
 ;@Ahk2Exe-SetDescription A professional utility to browse`, preview`, and export icons from DLL`, EXE`, and ICO files
-;@Ahk2Exe-SetFileVersion 1.4
-;@Ahk2Exe-SetCompanyName AkcanSoft
+;@Ahk2Exe-SetFileVersion 1.4.1
 ;@Ahk2Exe-SetCopyright ©2026 Mesut Akcan
 ;@Ahk2Exe-SetMainIcon app_icon.ico
 
 ; AS Icon Viewer
 ; Mesut Akcan
-; 11/03/2026
+; 2026-10-24
 ; -------------------------------------------
 ; A high-performance utility to browse, preview, and export
 ; icons from DLL, EXE, and ICO files.
-;
-; Author: Mesut Akcan
-; Home: mesutakcan.blogspot.com
-; Source: github.com/mesutakcan/AS-Icon-Viewer
-; YouTube: youtube.com/mesutakcan
+; -------------------------------------------
+; github.com/mesutakcan/AS-Icon-Viewer
+; -------------------------------------------
+; Mesut Akcan
+; mesutakcan.blogspot.com
+; youtube.com/mesutakcan
 
 #Requires AutoHotkey v2
 #SingleInstance Force
@@ -31,7 +31,7 @@ if (!A_IsCompiled)
 ; Global variables
 global App := {
 	Name: "AS Icon Viewer",
-	Version: "1.4",
+	Version: "1.4.1",
 	DllListFile: A_ScriptDir "\saved_files.txt",
 	FavoritesFile: A_ScriptDir "\favorites.txt",
 	WebUrl: "https://mesutakcan.blogspot.com",
@@ -137,7 +137,9 @@ global Layout := {
 	Left: {
 		X: 10,
 		W: 250,
-		BtnW: 80,
+		AddBtnW: 70,
+		RemoveBtnW: 85,
+		ClearBtnW: 80,
 		BtnH: 30,
 		ListY: 70,
 		BottomOffset: 110
@@ -148,11 +150,13 @@ global Layout := {
 		DdlXOffset: 65
 	},
 	Right: {
-		W: 210,
+		W: 215,
 		BtnW: 100,
 		BtnH: 30,
 		TestBtnXOffset: 105,
-		FavBtnW: 65,
+		FavAddBtnW: 55,
+		FavRemoveBtnW: 85,
+		FavClearBtnW: 65,
 		SizeW: 70,
 		LabelW: 100,
 		FavIconColW: 38,
@@ -279,11 +283,11 @@ mnu_FavContext_Empty.Add(Txt.ClearFav, (*) => ClearFavorites())
 
 ; --- Sidebar (File List) ---
 g.AddText("x" Layout.Left.X " y10 w" Layout.Left.W, Symbol.File " Icon Files:")
-btn_AddFile := g.AddButton("x" Layout.Left.X " y35 w" Layout.Left.BtnW " h" Layout.Left.BtnH, Txt.Add)
+btn_AddFile := g.AddButton("x" Layout.Left.X " y35 w" Layout.Left.AddBtnW " h" Layout.Left.BtnH, Txt.Add)
 btn_AddFile.OnEvent("Click", AddCustomFile)
-btn_RemoveFile := g.AddButton("x" (Layout.Left.X + 85) " y35 w" Layout.Left.BtnW " h" Layout.Left.BtnH, Txt.Remove)
+btn_RemoveFile := g.AddButton("x" (Layout.Left.X + Layout.Left.AddBtnW + 5) " y35 w" Layout.Left.RemoveBtnW " h" Layout.Left.BtnH, Txt.Remove)
 btn_RemoveFile.OnEvent("Click", RemoveCustomFile)
-btn_ClearList := g.AddButton("x" (Layout.Left.X + 170) " y35 w" Layout.Left.BtnW " h" Layout.Left.BtnH, Txt.Clear)
+btn_ClearList := g.AddButton("x" (Layout.Left.X + Layout.Left.AddBtnW + Layout.Left.RemoveBtnW + 10) " y35 w" Layout.Left.ClearBtnW " h" Layout.Left.BtnH, Txt.Clear)
 btn_ClearList.OnEvent("Click", ClearFileList)
 lst_Files := g.AddListBox("x" Layout.Left.X " y" Layout.Left.ListY " w" Layout.Left.W " h465 Multi +VScroll +HScroll",
 	[])
@@ -335,11 +339,11 @@ btn_Test := g.AddButton("x+5 y285 w95 h30", Txt.Test)
 btn_Test.OnEvent("Click", (*) => TestIcon())
 
 lbl_Favorites := g.AddText("x680 y335 w210", Symbol.Star " Favorites:")
-btn_FavAdd := g.AddButton("x680 y360 w" Layout.Right.FavBtnW " h" Layout.Right.BtnH, Txt.AddFav)
+btn_FavAdd := g.AddButton("x680 y360 w" Layout.Right.FavAddBtnW " h" Layout.Right.BtnH, Txt.AddFav)
 btn_FavAdd.OnEvent("Click", AddToFavorites)
-btn_FavRemove := g.AddButton("x+5 y360 w" Layout.Right.FavBtnW " h" Layout.Right.BtnH, Txt.RemoveFav)
+btn_FavRemove := g.AddButton("x+5 y360 w" Layout.Right.FavRemoveBtnW " h" Layout.Right.BtnH, Txt.RemoveFav)
 btn_FavRemove.OnEvent("Click", RemoveFromFavorites)
-btn_FavClear := g.AddButton("x+5 y360 w" Layout.Right.FavBtnW " h" Layout.Right.BtnH, Txt.ClearFav)
+btn_FavClear := g.AddButton("x+5 y360 w" Layout.Right.FavClearBtnW " h" Layout.Right.BtnH, Txt.ClearFav)
 btn_FavClear.OnEvent("Click", ClearFavorites)
 
 lv_Favorites := g.AddListView("x680 y395 w210 h150 Grid", ["Icon", "Num", "File", "FullPath"])
@@ -1204,6 +1208,7 @@ ClearFileList(*) {
 	lv_Icons.Delete()
 	FilePathMap.Clear()
 	State.CurrentDllPath := ""
+	UpdatePreviewPane("", 0)
 	State.dllFileListChanged := true
 	SendMessage(0x000B, 1, 0, lst_Files.Hwnd) ; WM_SETREDRAW on
 	DllCall("InvalidateRect", "Ptr", lst_Files.Hwnd, "Ptr", 0, "Int", true)
@@ -1309,9 +1314,9 @@ GuiSize(GuiObj, MinMax, Width, Height) {
 	lbl_Favorites.Move(rightPanelX, favoritesLabelY)
 
 	favButtonsY := favoritesLabelY + 25
-	btn_FavAdd.Move(rightPanelX, favButtonsY, Layout.Right.FavBtnW)
-	btn_FavRemove.Move(rightPanelX + Layout.Right.FavBtnW + 5, favButtonsY, Layout.Right.FavBtnW)
-	btn_FavClear.Move(rightPanelX + (Layout.Right.FavBtnW + 5) * 2, favButtonsY, Layout.Right.FavBtnW)
+	btn_FavAdd.Move(rightPanelX, favButtonsY, Layout.Right.FavAddBtnW)
+	btn_FavRemove.Move(rightPanelX + Layout.Right.FavAddBtnW + 5, favButtonsY, Layout.Right.FavRemoveBtnW)
+	btn_FavClear.Move(rightPanelX + Layout.Right.FavAddBtnW + Layout.Right.FavRemoveBtnW + 10, favButtonsY, Layout.Right.FavClearBtnW)
 
 	favoritesListY := favButtonsY + 35
 	favListHeight := Height - favoritesListY - 40

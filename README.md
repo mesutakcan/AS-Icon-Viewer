@@ -3,12 +3,12 @@
 [![AutoHotkey](https://img.shields.io/badge/Language-AutoHotkey_v2-green.svg)](https://www.autohotkey.com/)
 [![Platform](https://img.shields.io/badge/Platform-Windows-blue.svg)](https://www.microsoft.com/windows)
 [![License](https://img.shields.io/badge/License-GPL_v3-blue.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/Version-1.4-brightgreen.svg)](https://github.com/mesutakcan/AS-Icon-Viewer/releases)
+[![Version](https://img.shields.io/badge/Version-1.4.1-brightgreen.svg)](https://github.com/akcansoft/AS-Icon-Viewer/releases)
 
-![GitHub stars](https://img.shields.io/github/stars/mesutakcan/AS-Icon-Viewer?style=social)
-![GitHub forks](https://img.shields.io/github/forks/mesutakcan/AS-Icon-Viewer?style=social)
-![GitHub issues](https://img.shields.io/github/issues/mesutakcan/AS-Icon-Viewer)
-[![Downloads](https://img.shields.io/github/downloads/mesutakcan/AS-Icon-Viewer/total)](https://github.com/mesutakcan/AS-Icon-Viewer/releases)
+![GitHub stars](https://img.shields.io/github/stars/akcansoft/AS-Icon-Viewer?style=social)
+![GitHub forks](https://img.shields.io/github/forks/akcansoft/AS-Icon-Viewer?style=social)
+![GitHub issues](https://img.shields.io/github/issues/akcansoft/AS-Icon-Viewer)
+[![Downloads](https://img.shields.io/github/downloads/akcansoft/AS-Icon-Viewer/total)](https://github.com/akcansoft/AS-Icon-Viewer/releases)
 
 > A high-performance utility to browse, preview, and export icons from DLL, EXE, and ICO files, built with [AutoHotkey v2](https://www.autohotkey.com/)
 
@@ -71,7 +71,13 @@
 
 ## 📜 Version History
 
-### v1.4 : 11/03/2026
+### v1.4.1 : 2026-10-24
+
+- **Layout Fixes:** Adjusted Add/Remove/Clear button widths to prevent labels from wrapping on some systems.
+- **Clear List Fix:** Clearing the file list now also clears the selected icon preview and generated code.
+- **Repository Links:** Updated GitHub links to the `mesutakcan/AS-Icon-Viewer` repository.
+
+### v1.4 : 2026-03-11
 
 - **Interpolation Toggle:** Switch between high-quality scaling and nearest-neighbor for preview, copy, and export.
 - **Favorites Navigation:** "Go to Source" jumps from a favorite to the original file and icon index.
@@ -79,7 +85,7 @@
 - **Live Preview Resizing:** 16–256px preview size updates the layout on the fly.
 - **Refresh Actions:** Reload icons from the Icon View menu or the icon context menu.
 
-### v1.3 : 10/02/2026
+### v1.3 : 2026-02-10
 - **Direct View Switching:** Replaced the "Switch View" cycle button with a direct DropDownList for instant access to any view mode.
 - **Advanced 3-Panel StatusBar:** New native status bar showing operation status, icon counts, and active file paths in separate segments.
 - **File Location Explorer:** Added "Open File Location" to the file list context menu to quickly find source files in Windows Explorer.
@@ -89,15 +95,15 @@
 - **Redesigned Symbols:** Modernized notification system using a centralized Symbol object for consistent visual feedback (info, success, warnings).
 - **Refined Menu System:** Reorganized Menu Bar with intuitive access keys (Alt hotkeys) and clearer menu structures.
 
-### v1.2 : 09/02/2026
+### v1.2 : 2026-02-09
 - **Export Size Selector:** Choose 16–256px sizes for preview and saved icons
 - **Better Transparency:** Clipboard copy now uses PNG with alpha
 - **Improved Exports:** Higher-quality alpha handling and cleaner ICO output
 - **Smarter Save Dialog:** File extension follows the selected file type
 
-### v1.1 : 07/02/2026
+### v1.1 : 2026-02-07
 
-### v1.0 : 05/02/2026
+### v1.0 : 2026-02-05
 - First Release
 
 ## 📋 System Requirements
@@ -109,7 +115,7 @@
 ## 📦 Installation
 
 ### Option 1: Download Compiled Executable (Recommended)
-1. Download the latest release from [Releases](https://github.com/mesutakcan/AS-Icon-Viewer/releases)
+1. Download the latest release from [Releases](https://github.com/akcansoft/AS-Icon-Viewer/releases)
    - `AS.Icon.Viewer_x64.exe` for 64-bit Windows
    - `AS.Icon.Viewer_x32.exe` for 32-bit Windows
 2. Run the executable - no installation required!
@@ -118,7 +124,7 @@
 1. Install [AutoHotkey v2.0+](https://www.autohotkey.com/)
 2. Clone this repository:
    ```bash
-   git clone https://github.com/mesutakcan/AS-Icon-Viewer.git
+   git clone https://github.com/akcansoft/AS-Icon-Viewer.git
    ```
 3. Ensure these files are in the same directory:
    - `AS Icon Viewer.ahk`
@@ -256,5 +262,5 @@ This project is licensed under the **GNU General Public License v3.0** - see the
 **Mesut Akcan**
 
 - 🌐 Blog: [mesutakcan.blogspot.com](https://mesutakcan.blogspot.com)
-- 💻 GitHub: [@mesutakcan](https://github.com/mesutakcan)
+- 💻 GitHub: [@akcansoft](https://github.com/akcansoft)
 - 📺 YouTube: [mesutakcan](https://youtube.com/mesutakcan)
