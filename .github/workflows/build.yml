@@ -32,7 +32,7 @@ jobs:
           Expand-Archive compiler.zip -DestinationPath ahk
 
       # 3) Derleme (src klasöründe çalıştırılır) ---------------------------------
-      - name: Derleme (x64 ve x32)
+      - name: Derleme (x64 ve x86)
         shell: pwsh
         run: |
           $compiler = "..\ahk\Ahk2Exe.exe"
@@ -57,11 +57,11 @@ jobs:
             /base $ahk64 `
             /out "..\AS-Icon-Viewer-x64.exe"
 
-          # x32
+          # x86
           & $compiler `
             /in "AS Icon Viewer.ahk" `
             /base $ahk32 `
-            /out "..\AS-Icon-Viewer-x32.exe"
+            /out "..\AS-Icon-Viewer-x86.exe"
 
           Pop-Location
 
@@ -69,7 +69,7 @@ jobs:
       - name: Çıktı Kontrol
         shell: pwsh
         run: |
-          if (!(Test-Path "AS-Icon-Viewer-x64.exe") -or !(Test-Path "AS-Icon-Viewer-x32.exe")) {
+          if (!(Test-Path "AS-Icon-Viewer-x64.exe") -or !(Test-Path "AS-Icon-Viewer-x86.exe")) {
               Write-Error "Exe dosyaları oluşmadı"
               exit 1
           }
@@ -80,7 +80,7 @@ jobs:
         with:
           files: |
             AS-Icon-Viewer-x64.exe
-            AS-Icon-Viewer-x32.exe
+            AS-Icon-Viewer-x86.exe
           generate_release_notes: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
